@@ -11,7 +11,17 @@ class ComputerTest < MiniTest::Test
     @computer.run_program(data)
 
     assert_equal "2,0,0,0,99", @computer.data
+    assert_equal true, @computer.halted?
+    assert_equal false, @computer.overflow?
+  end
+
+  def test_overflow
+    data = "1,0,0,0,2"
+    @computer.run_program(data)
+
+    assert_equal "2,0,0,0,2", @computer.data
     assert_equal false, @computer.halted?
+    assert_equal true, @computer.overflow?
   end
 
   def test_multiplication_operation
@@ -19,7 +29,8 @@ class ComputerTest < MiniTest::Test
     @computer.run_program(data)
 
     assert_equal "2,4,4,5,99,9801", @computer.data
-    assert_equal false, @computer.halted?
+    assert_equal true, @computer.halted?
+    assert_equal false, @computer.overflow?
   end
 
   def test_program_halt
@@ -29,5 +40,6 @@ class ComputerTest < MiniTest::Test
 
     assert_equal "30,1,1,4,2,5,6,0,99", @computer.data
     assert_equal true, @computer.halted?
+    assert_equal false, @computer.overflow?
   end
 end

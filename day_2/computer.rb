@@ -1,5 +1,3 @@
-require "pry"
-
 class Computer
 
   def run_program(data)
@@ -12,14 +10,16 @@ class Computer
   end
 
   def run!
+    return if halted? || overflow?
+
     case opcode
-      when 1; add
-      when 2; multiply
+      when 1 then add
+      when 2 then multiply
+      when 99 then halt
     end
 
     advance!
-
-    run! unless halted? || overflow?
+    run!
   end
 
   def opcode
@@ -40,6 +40,10 @@ class Computer
     set_value_at(peek(3), factors.reduce(&:*))
   end
 
+  def halt
+    @halted = true
+  end
+
   def value_at(index)
     @data[index]
   end
@@ -56,7 +60,7 @@ class Computer
     return if halted?
 
     @position += 4
-    @overflow = true if peek(3).nil?
+    @overflow = true if peek(3).nil? && opcode < 99
   end
 
   def prep_data(data)
