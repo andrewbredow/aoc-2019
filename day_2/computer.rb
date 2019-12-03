@@ -1,6 +1,8 @@
 require "pry"
 
 class Computer
+  @position = 0
+
   def run_program(data)
     self.data = data
 
@@ -8,16 +10,12 @@ class Computer
   end
 
   def run!
+    
 
   end
 
   def data=(data)
-    if data.kind_of? String
-      data = data.split(",")
-    end
-    unless data.kind_of?(Array)
-      throw "Unsupported data type"
-    end
+    data = data.split(",")
 
     @data = data
   end
