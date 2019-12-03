@@ -14,6 +14,7 @@ class Computer
   def run!
     case opcode
       when 1; add
+      when 2; multiply
     end
 
     advance!
@@ -30,6 +31,13 @@ class Computer
     addends << value_at(peek(1))
     addends << value_at(peek(2))
     set_value_at(peek(3), addends.reduce(&:+))
+  end
+
+  def multiply
+    factors = []
+    factors << value_at(peek(1))
+    factors << value_at(peek(2))
+    set_value_at(peek(3), factors.reduce(&:*))
   end
 
   def value_at(index)
@@ -65,6 +73,6 @@ class Computer
 
   def overflow?
     !! @overflow
- end
+  end
 end
 
