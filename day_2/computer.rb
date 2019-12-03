@@ -1,10 +1,14 @@
 class Computer
 
-  def run_program(data)
-    @data = prep_data(data)
+  def initialize
+    @data = []
     @position = 0
     @halted = false
     @overflow = false
+  end
+
+  def run_program(data)
+    @data = prep_data(data)
 
     run!
   end
@@ -61,6 +65,10 @@ class Computer
 
     @position += 4
     @overflow = true if peek(3).nil? && opcode < 99
+  end
+
+  def data=(data)
+    @data = prep_data(data)
   end
 
   def prep_data(data)
